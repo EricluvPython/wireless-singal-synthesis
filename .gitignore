@@ -1,3 +1,35 @@
-./checkpoints/
-./wandb/
-./__pycache__/
+# Checkpoints and model files
+checkpoints/
+*.pt
+*.pth
+
+# Wandb logs
+wandb/
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+
+# Data and results
+work_dir/
+*.csv
+*.png
+*.jpg
+*.json
+separated_data.zip
+wifi_localization.txt
+powder_data/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db

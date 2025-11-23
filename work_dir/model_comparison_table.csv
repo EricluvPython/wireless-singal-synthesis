@@ -1,0 +1,4 @@
+Method,Parameters,Model Size (MB),Inference Time (ms/sample)
+DiT,"3,698,704",14.11,721.60 ± 47.57
+GAN,"95,924",0.37,0.13 ± 0.06
+Kriging,—,—,0.0263 ± 0.0106

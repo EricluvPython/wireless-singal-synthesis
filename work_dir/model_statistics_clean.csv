@@ -1,0 +1,9 @@
+Dataset,Method,Parameters,Size,Inference Time
+UCI Indoor,DiT,"3,698,704",14.11 MB,719.46 ± 82.05 ms
+UCI Indoor,GAN (Generator),"60,823",0.23 MB,0.12 ± 0.01 ms
+UCI Indoor,GAN (Discriminator),"35,101",0.13 MB,0.09 ± 0.04 ms
+UCI Indoor,MLP Classifier,"202,500",0.78 MB,0.15 ± 0.02 ms
+POWDER Outdoor,DiT,"3,701,776",14.12 MB,693.02 ± 55.16 ms
+POWDER Outdoor,GAN (Generator),"64,345",0.25 MB,0.15 ± 0.25 ms
+POWDER Outdoor,GAN (Discriminator),"40,081",0.15 MB,0.09 ± 0.07 ms
+POWDER Outdoor,MLP Classifier,"210,192",0.81 MB,0.14 ± 0.02 ms

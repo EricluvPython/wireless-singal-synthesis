@@ -1,0 +1,517 @@
+
+======================================================================
+DiT DATA FIDELITY EXPERIMENT
+======================================================================
+Training ratios: [0.01, 0.05, 0.1, 0.25, 0.5, 0.8, 1.0]
+Generative model epochs: 2000
+MLP epochs: 100
+Wandb logging: True
+
+======================================================================
+Experiments on uci
+======================================================================
+
+======================================================================
+Loading UCI WiFi Dataset (Indoor)
+======================================================================
+Total samples: 2000
+Features: 7 APs, Classes: 4 rooms
+Class distribution: [500 500 500 500]
+Train: (1000, 7), Test: (1000, 7)
+Train class distribution: [250 250 250 250]
+Test class distribution: [250 250 250 250]
+
+**********************************************************************
+PHASE 1: Training Generative Models on 100% Data
+**********************************************************************
+
+[1/2] Training DiT on 100% training data...
+
+======================================================================
+Training DiT on UCI_Indoor
+======================================================================
+Batch size: 128, Batches per epoch: 7
+Epoch 1/2000 | Loss: 1.0267 | Best: 1.0267 | Time: 0.8s
+Epoch 100/2000 | Loss: 0.0562 | Best: 0.0500 | Time: 10.5s
+Epoch 200/2000 | Loss: 0.0333 | Best: 0.0316 | Time: 20.1s
+Epoch 300/2000 | Loss: 0.0299 | Best: 0.0251 | Time: 29.7s
+Epoch 400/2000 | Loss: 0.0259 | Best: 0.0233 | Time: 39.4s
+Epoch 500/2000 | Loss: 0.0232 | Best: 0.0207 | Time: 49.1s
+Epoch 600/2000 | Loss: 0.0270 | Best: 0.0191 | Time: 58.7s
+Epoch 700/2000 | Loss: 0.0227 | Best: 0.0178 | Time: 68.3s
+Epoch 800/2000 | Loss: 0.0186 | Best: 0.0174 | Time: 77.9s
+Epoch 900/2000 | Loss: 0.0214 | Best: 0.0167 | Time: 87.6s
+Epoch 1000/2000 | Loss: 0.0186 | Best: 0.0160 | Time: 97.2s
+Epoch 1100/2000 | Loss: 0.0194 | Best: 0.0144 | Time: 106.8s
+Epoch 1200/2000 | Loss: 0.0172 | Best: 0.0144 | Time: 116.4s
+Epoch 1300/2000 | Loss: 0.0185 | Best: 0.0144 | Time: 126.0s
+Epoch 1400/2000 | Loss: 0.0167 | Best: 0.0144 | Time: 135.6s
+Epoch 1500/2000 | Loss: 0.0157 | Best: 0.0140 | Time: 145.2s
+Epoch 1600/2000 | Loss: 0.0165 | Best: 0.0138 | Time: 154.7s
+Epoch 1700/2000 | Loss: 0.0148 | Best: 0.0131 | Time: 164.3s
+Epoch 1800/2000 | Loss: 0.0164 | Best: 0.0131 | Time: 174.0s
+Epoch 1900/2000 | Loss: 0.0135 | Best: 0.0126 | Time: 183.6s
+Epoch 2000/2000 | Loss: 0.0148 | Best: 0.0126 | Time: 193.2s
+Warning: Best checkpoint not found, using final model
+✓ DiT training complete in 193.2s
+
+[2/2] Training GAN on 100% training data...
+
+======================================================================
+Training GAN on UCI_Indoor
+======================================================================
+Batch size: 128, Batches per epoch: 7
+Epoch 1/2000 | G_Loss: 0.6548, D_Loss: 1.3835 | Best_G: 0.6548 | Time: 0.1s
+Epoch 100/2000 | G_Loss: 0.9861, D_Loss: 1.1160 | Best_G: 0.6548 | Time: 5.8s
+Epoch 200/2000 | G_Loss: 1.1107, D_Loss: 1.1104 | Best_G: 0.6548 | Time: 11.6s
+Epoch 300/2000 | G_Loss: 1.1900, D_Loss: 0.9786 | Best_G: 0.6548 | Time: 17.3s
+Epoch 400/2000 | G_Loss: 1.7196, D_Loss: 1.0622 | Best_G: 0.6548 | Time: 23.0s
+Epoch 500/2000 | G_Loss: 1.8449, D_Loss: 0.8272 | Best_G: 0.6548 | Time: 28.7s
+Epoch 600/2000 | G_Loss: 1.4717, D_Loss: 0.8238 | Best_G: 0.6548 | Time: 34.3s
+Epoch 700/2000 | G_Loss: 1.4528, D_Loss: 0.7447 | Best_G: 0.6548 | Time: 40.0s
+Epoch 800/2000 | G_Loss: 1.7602, D_Loss: 0.8641 | Best_G: 0.6548 | Time: 45.6s
+Epoch 900/2000 | G_Loss: 1.2826, D_Loss: 0.9969 | Best_G: 0.6548 | Time: 51.3s
+Epoch 1000/2000 | G_Loss: 1.2426, D_Loss: 0.9069 | Best_G: 0.6548 | Time: 56.9s
+Epoch 1100/2000 | G_Loss: 1.6104, D_Loss: 0.7858 | Best_G: 0.6548 | Time: 62.6s
+Epoch 1200/2000 | G_Loss: 1.6541, D_Loss: 0.7972 | Best_G: 0.6548 | Time: 68.3s
+Epoch 1300/2000 | G_Loss: 1.7291, D_Loss: 0.6108 | Best_G: 0.6548 | Time: 73.9s
+Epoch 1400/2000 | G_Loss: 1.5899, D_Loss: 1.0877 | Best_G: 0.6548 | Time: 79.6s
+Epoch 1500/2000 | G_Loss: 1.6908, D_Loss: 0.7704 | Best_G: 0.6548 | Time: 85.3s
+Epoch 1600/2000 | G_Loss: 1.8591, D_Loss: 0.7196 | Best_G: 0.6548 | Time: 90.9s
+Epoch 1700/2000 | G_Loss: 1.9444, D_Loss: 0.5846 | Best_G: 0.6548 | Time: 96.6s
+Epoch 1800/2000 | G_Loss: 3.0950, D_Loss: 0.5197 | Best_G: 0.6548 | Time: 102.4s
+Epoch 1900/2000 | G_Loss: 2.1173, D_Loss: 0.5132 | Best_G: 0.6548 | Time: 108.1s
+Epoch 2000/2000 | G_Loss: 2.3288, D_Loss: 0.5104 | Best_G: 0.6548 | Time: 113.7s
+Warning: Best checkpoint not found, using final generator
+✓ GAN training complete in 113.7s
+
+**********************************************************************
+PHASE 2: Testing with Varying Real Data Percentages
+**********************************************************************
+
+──────────────────────────────────────────────────────────────────────
+Experiment with 1% real data
+──────────────────────────────────────────────────────────────────────
+Real data: 10 samples (2/class)
+Synthetic target: 248/class
+
+[1/5] Real Only Baseline...
+✓ Real Only Accuracy: 77.00%
+
+[2/5] DiT Augmented...
+  Combined: 10 real + 992 synthetic
+✓ DiT Augmented Accuracy: 98.80%
+
+[3/5] GAN Augmented...
+  Combined: 10 real + 992 synthetic
+✓ GAN Augmented Accuracy: 89.40%
+
+[4/5] Kriging Augmented...
+  Combined: 10 real + 992 synthetic
+✓ Kriging Augmented Accuracy: 88.50%
+
+──────────────────────────────────────────────────────────────────────
+Experiment with 5% real data
+──────────────────────────────────────────────────────────────────────
+Real data: 50 samples (12/class)
+Synthetic target: 238/class
+
+[1/5] Real Only Baseline...
+✓ Real Only Accuracy: 93.80%
+
+[2/5] DiT Augmented...
+  Combined: 50 real + 952 synthetic
+✓ DiT Augmented Accuracy: 98.70%
+
+[3/5] GAN Augmented...
+  Combined: 50 real + 952 synthetic
+✓ GAN Augmented Accuracy: 93.40%
+
+[4/5] Kriging Augmented...
+  Combined: 50 real + 952 synthetic
+✓ Kriging Augmented Accuracy: 93.20%
+
+──────────────────────────────────────────────────────────────────────
+Experiment with 10% real data
+──────────────────────────────────────────────────────────────────────
+Real data: 100 samples (25/class)
+Synthetic target: 225/class
+
+[1/5] Real Only Baseline...
+✓ Real Only Accuracy: 95.30%
+
+[2/5] DiT Augmented...
+  Combined: 100 real + 900 synthetic
+✓ DiT Augmented Accuracy: 98.40%
+
+[3/5] GAN Augmented...
+  Combined: 100 real + 900 synthetic
+✓ GAN Augmented Accuracy: 95.90%
+
+[4/5] Kriging Augmented...
+  Combined: 100 real + 900 synthetic
+✓ Kriging Augmented Accuracy: 94.60%
+
+──────────────────────────────────────────────────────────────────────
+Experiment with 25% real data
+──────────────────────────────────────────────────────────────────────
+Real data: 250 samples (62/class)
+Synthetic target: 188/class
+
+[1/5] Real Only Baseline...
+✓ Real Only Accuracy: 97.60%
+
+[2/5] DiT Augmented...
+  Combined: 250 real + 752 synthetic
+✓ DiT Augmented Accuracy: 99.10%
+
+[3/5] GAN Augmented...
+  Combined: 250 real + 752 synthetic
+✓ GAN Augmented Accuracy: 97.70%
+
+[4/5] Kriging Augmented...
+  Combined: 250 real + 752 synthetic
+✓ Kriging Augmented Accuracy: 97.40%
+
+──────────────────────────────────────────────────────────────────────
+Experiment with 50% real data
+──────────────────────────────────────────────────────────────────────
+Real data: 500 samples (125/class)
+Synthetic target: 125/class
+
+[1/5] Real Only Baseline...
+✓ Real Only Accuracy: 98.30%
+
+[2/5] DiT Augmented...
+  Combined: 500 real + 500 synthetic
+✓ DiT Augmented Accuracy: 98.40%
+
+[3/5] GAN Augmented...
+  Combined: 500 real + 500 synthetic
+✓ GAN Augmented Accuracy: 98.50%
+
+[4/5] Kriging Augmented...
+  Combined: 500 real + 500 synthetic
+✓ Kriging Augmented Accuracy: 98.50%
+
+──────────────────────────────────────────────────────────────────────
+Experiment with 80% real data
+──────────────────────────────────────────────────────────────────────
+Real data: 800 samples (200/class)
+Synthetic target: 50/class
+
+[1/5] Real Only Baseline...
+✓ Real Only Accuracy: 98.50%
+
+[2/5] DiT Augmented...
+  Combined: 800 real + 200 synthetic
+✓ DiT Augmented Accuracy: 98.30%
+
+[3/5] GAN Augmented...
+  Combined: 800 real + 200 synthetic
+✓ GAN Augmented Accuracy: 98.40%
+
+[4/5] Kriging Augmented...
+  Combined: 800 real + 200 synthetic
+✓ Kriging Augmented Accuracy: 97.90%
+
+──────────────────────────────────────────────────────────────────────
+Experiment with 100% real data
+──────────────────────────────────────────────────────────────────────
+Real data: 1000 samples (250/class)
+
+[1/5] Real Only Baseline...
+✓ Real Only Accuracy: 98.70%
+
+[5/5] Oracle (100% real data)...
+✓ Oracle Accuracy: 98.20%
+
+======================================================================
+Experiments on powder
+======================================================================
+
+======================================================================
+Loading POWDER Outdoor RSS Dataset
+======================================================================
+Train: (3301, 25), Test: (826, 25)
+Features: 25, Classes: 15
+Train class distribution: [199 207 192   0 276 319 490 286 133 311 368 172  42 128 158  20]
+Test class distribution: [ 43  42  46   0  69  74 123  77  46  76 102  39   8  34  41   6]
+
+**********************************************************************
+PHASE 1: Training Generative Models on 100% Data
+**********************************************************************
+
+[1/2] Training DiT on 100% training data...
+
+======================================================================
+Training DiT on POWDER_Outdoor
+======================================================================
+Batch size: 128, Batches per epoch: 25
+Epoch 1/2000 | Loss: 0.7168 | Best: 0.7168 | Time: 0.3s
+Epoch 100/2000 | Loss: 0.0295 | Best: 0.0273 | Time: 33.9s
+Epoch 200/2000 | Loss: 0.0212 | Best: 0.0198 | Time: 67.8s
+Epoch 300/2000 | Loss: 0.0157 | Best: 0.0157 | Time: 101.9s
+Epoch 400/2000 | Loss: 0.0147 | Best: 0.0136 | Time: 136.1s
+Epoch 500/2000 | Loss: 0.0137 | Best: 0.0125 | Time: 170.0s
+Epoch 600/2000 | Loss: 0.0123 | Best: 0.0116 | Time: 204.1s
+Epoch 700/2000 | Loss: 0.0118 | Best: 0.0105 | Time: 238.1s
+Epoch 800/2000 | Loss: 0.0116 | Best: 0.0105 | Time: 272.2s
+Epoch 900/2000 | Loss: 0.0113 | Best: 0.0102 | Time: 306.4s
+Epoch 1000/2000 | Loss: 0.0112 | Best: 0.0099 | Time: 340.4s
+Epoch 1100/2000 | Loss: 0.0105 | Best: 0.0092 | Time: 374.5s
+Epoch 1200/2000 | Loss: 0.0109 | Best: 0.0090 | Time: 408.6s
+Epoch 1300/2000 | Loss: 0.0096 | Best: 0.0090 | Time: 442.6s
+Epoch 1400/2000 | Loss: 0.0096 | Best: 0.0090 | Time: 476.7s
+Epoch 1500/2000 | Loss: 0.0094 | Best: 0.0086 | Time: 510.5s
+Epoch 1600/2000 | Loss: 0.0097 | Best: 0.0086 | Time: 544.2s
+Epoch 1700/2000 | Loss: 0.0099 | Best: 0.0086 | Time: 578.4s
+Epoch 1800/2000 | Loss: 0.0089 | Best: 0.0086 | Time: 612.5s
+Epoch 1900/2000 | Loss: 0.0092 | Best: 0.0084 | Time: 646.6s
+Epoch 2000/2000 | Loss: 0.0090 | Best: 0.0084 | Time: 680.7s
+✓ Loaded best DiT model (loss: 0.0084)
+✓ Loaded best EMA model
+✓ DiT training complete in 680.9s
+
+[2/2] Training GAN on 100% training data...
+
+======================================================================
+Training GAN on POWDER_Outdoor
+======================================================================
+Batch size: 128, Batches per epoch: 25
+Epoch 1/2000 | G_Loss: 0.6884, D_Loss: 1.3726 | Best_G: 0.6884 | Time: 0.2s
+Epoch 100/2000 | G_Loss: 2.0130, D_Loss: 0.6753 | Best_G: 0.6565 | Time: 20.6s
+Epoch 200/2000 | G_Loss: 2.5671, D_Loss: 0.4606 | Best_G: 0.6565 | Time: 40.9s
+Epoch 300/2000 | G_Loss: 3.2673, D_Loss: 0.3524 | Best_G: 0.6565 | Time: 61.3s
+Epoch 400/2000 | G_Loss: 3.1258, D_Loss: 0.3430 | Best_G: 0.6565 | Time: 81.6s
+Epoch 500/2000 | G_Loss: 3.0611, D_Loss: 0.3185 | Best_G: 0.6565 | Time: 101.9s
+Epoch 600/2000 | G_Loss: 4.1007, D_Loss: 0.2679 | Best_G: 0.6565 | Time: 122.3s
+Epoch 700/2000 | G_Loss: 3.8540, D_Loss: 0.2522 | Best_G: 0.6565 | Time: 142.6s
+Epoch 800/2000 | G_Loss: 3.9825, D_Loss: 0.2953 | Best_G: 0.6565 | Time: 162.8s
+Epoch 900/2000 | G_Loss: 4.4441, D_Loss: 0.2132 | Best_G: 0.6565 | Time: 183.2s
+Epoch 1000/2000 | G_Loss: 4.0442, D_Loss: 0.2576 | Best_G: 0.6565 | Time: 203.5s
+Epoch 1100/2000 | G_Loss: 4.9201, D_Loss: 0.2291 | Best_G: 0.6565 | Time: 223.8s
+Epoch 1200/2000 | G_Loss: 4.2336, D_Loss: 0.1836 | Best_G: 0.6565 | Time: 244.1s
+Epoch 1300/2000 | G_Loss: 4.2186, D_Loss: 0.2382 | Best_G: 0.6565 | Time: 264.5s
+Epoch 1400/2000 | G_Loss: 5.0332, D_Loss: 0.1772 | Best_G: 0.6565 | Time: 284.8s
+Epoch 1500/2000 | G_Loss: 4.4965, D_Loss: 0.1509 | Best_G: 0.6565 | Time: 305.2s
+Epoch 1600/2000 | G_Loss: 4.7198, D_Loss: 0.1723 | Best_G: 0.6565 | Time: 325.4s
+Epoch 1700/2000 | G_Loss: 5.1799, D_Loss: 0.1463 | Best_G: 0.6565 | Time: 345.8s
+Epoch 1800/2000 | G_Loss: 4.3638, D_Loss: 0.1569 | Best_G: 0.6565 | Time: 366.3s
+Epoch 1900/2000 | G_Loss: 4.6143, D_Loss: 0.1378 | Best_G: 0.6565 | Time: 386.6s
+Epoch 2000/2000 | G_Loss: 5.2577, D_Loss: 0.1446 | Best_G: 0.6565 | Time: 406.9s
+Warning: Best checkpoint not found, using final generator
+✓ GAN training complete in 406.9s
+
+**********************************************************************
+PHASE 2: Testing with Varying Real Data Percentages
+**********************************************************************
+
+──────────────────────────────────────────────────────────────────────
+Experiment with 1% real data
+──────────────────────────────────────────────────────────────────────
+Real data: 33 samples (2/class)
+Synthetic target: 204/class
+
+[1/5] Real Only Baseline...
+✓ Real Only Accuracy: 37.41%
+
+[2/5] DiT Augmented...
+  Combined: 33 real + 3264 synthetic
+✓ DiT Augmented Accuracy: 62.35%
+
+[3/5] GAN Augmented...
+  Combined: 33 real + 3264 synthetic
+✓ GAN Augmented Accuracy: 38.62%
+
+[4/5] Kriging Augmented...
+  Combined: 33 real + 2652 synthetic
+✓ Kriging Augmented Accuracy: 34.26%
+
+──────────────────────────────────────────────────────────────────────
+Experiment with 5% real data
+──────────────────────────────────────────────────────────────────────
+Real data: 165 samples (10/class)
+Synthetic target: 196/class
+
+[1/5] Real Only Baseline...
+✓ Real Only Accuracy: 60.29%
+
+[2/5] DiT Augmented...
+  Combined: 165 real + 3136 synthetic
+✓ DiT Augmented Accuracy: 66.10%
+
+[3/5] GAN Augmented...
+  Combined: 165 real + 3136 synthetic
+✓ GAN Augmented Accuracy: 61.02%
+
+[4/5] Kriging Augmented...
+  Combined: 165 real + 2940 synthetic
+✓ Kriging Augmented Accuracy: 59.32%
+
+──────────────────────────────────────────────────────────────────────
+Experiment with 10% real data
+──────────────────────────────────────────────────────────────────────
+Real data: 330 samples (20/class)
+Synthetic target: 186/class
+
+[1/5] Real Only Baseline...
+✓ Real Only Accuracy: 70.10%
+
+[2/5] DiT Augmented...
+  Combined: 330 real + 2976 synthetic
+✓ DiT Augmented Accuracy: 69.49%
+
+[3/5] GAN Augmented...
+  Combined: 330 real + 2976 synthetic
+✓ GAN Augmented Accuracy: 70.10%
+
+[4/5] Kriging Augmented...
+  Combined: 330 real + 2790 synthetic
+✓ Kriging Augmented Accuracy: 68.77%
+
+──────────────────────────────────────────────────────────────────────
+Experiment with 25% real data
+──────────────────────────────────────────────────────────────────────
+Real data: 825 samples (51/class)
+Synthetic target: 155/class
+
+[1/5] Real Only Baseline...
+✓ Real Only Accuracy: 79.66%
+
+[2/5] DiT Augmented...
+  Combined: 825 real + 2480 synthetic
+✓ DiT Augmented Accuracy: 75.79%
+
+[3/5] GAN Augmented...
+  Combined: 825 real + 2480 synthetic
+✓ GAN Augmented Accuracy: 79.66%
+
+[4/5] Kriging Augmented...
+  Combined: 825 real + 2325 synthetic
+✓ Kriging Augmented Accuracy: 77.48%
+
+──────────────────────────────────────────────────────────────────────
+Experiment with 50% real data
+──────────────────────────────────────────────────────────────────────
+Real data: 1650 samples (103/class)
+Synthetic target: 103/class
+
+[1/5] Real Only Baseline...
+✓ Real Only Accuracy: 80.87%
+
+[2/5] DiT Augmented...
+  Combined: 1650 real + 1648 synthetic
+✓ DiT Augmented Accuracy: 79.78%
+
+[3/5] GAN Augmented...
+  Combined: 1650 real + 1648 synthetic
+✓ GAN Augmented Accuracy: 79.90%
+
+[4/5] Kriging Augmented...
+  Combined: 1650 real + 1545 synthetic
+✓ Kriging Augmented Accuracy: 81.11%
+
+──────────────────────────────────────────────────────────────────────
+Experiment with 80% real data
+──────────────────────────────────────────────────────────────────────
+Real data: 2640 samples (165/class)
+Synthetic target: 41/class
+
+[1/5] Real Only Baseline...
+✓ Real Only Accuracy: 83.54%
+
+[2/5] DiT Augmented...
+  Combined: 2640 real + 656 synthetic
+✓ DiT Augmented Accuracy: 82.45%
+
+[3/5] GAN Augmented...
+  Combined: 2640 real + 656 synthetic
+✓ GAN Augmented Accuracy: 83.78%
+
+[4/5] Kriging Augmented...
+  Combined: 2640 real + 615 synthetic
+✓ Kriging Augmented Accuracy: 80.87%
+
+──────────────────────────────────────────────────────────────────────
+Experiment with 100% real data
+──────────────────────────────────────────────────────────────────────
+Real data: 3301 samples (206/class)
+
+[1/5] Real Only Baseline...
+✓ Real Only Accuracy: 81.84%
+
+[5/5] Oracle (100% real data)...
+✓ Oracle Accuracy: 82.57%
+
+✓ Results saved to: ./work_dir/dit_data_fidelity_results.csv
+
+======================================================================
+RESULTS SUMMARY
+======================================================================
+       dataset            method  train_ratio  num_real  num_synthetic  total_samples  accuracy
+    UCI_Indoor         Real_Only         0.01        10              0             10  0.770000
+    UCI_Indoor     DiT_Augmented         0.01        10            992           1002  0.988000
+    UCI_Indoor     GAN_Augmented         0.01        10            992           1002  0.894000
+    UCI_Indoor Kriging_Augmented         0.01        10            992           1002  0.885000
+    UCI_Indoor         Real_Only         0.05        50              0             50  0.938000
+    UCI_Indoor     DiT_Augmented         0.05        50            952           1002  0.987000
+    UCI_Indoor     GAN_Augmented         0.05        50            952           1002  0.934000
+    UCI_Indoor Kriging_Augmented         0.05        50            952           1002  0.932000
+    UCI_Indoor         Real_Only         0.10       100              0            100  0.953000
+    UCI_Indoor     DiT_Augmented         0.10       100            900           1000  0.984000
+    UCI_Indoor     GAN_Augmented         0.10       100            900           1000  0.959000
+    UCI_Indoor Kriging_Augmented         0.10       100            900           1000  0.946000
+    UCI_Indoor         Real_Only         0.25       250              0            250  0.976000
+    UCI_Indoor     DiT_Augmented         0.25       250            752           1002  0.991000
+    UCI_Indoor     GAN_Augmented         0.25       250            752           1002  0.977000
+    UCI_Indoor Kriging_Augmented         0.25       250            752           1002  0.974000
+    UCI_Indoor         Real_Only         0.50       500              0            500  0.983000
+    UCI_Indoor     DiT_Augmented         0.50       500            500           1000  0.984000
+    UCI_Indoor     GAN_Augmented         0.50       500            500           1000  0.985000
+    UCI_Indoor Kriging_Augmented         0.50       500            500           1000  0.985000
+    UCI_Indoor         Real_Only         0.80       800              0            800  0.985000
+    UCI_Indoor     DiT_Augmented         0.80       800            200           1000  0.983000
+    UCI_Indoor     GAN_Augmented         0.80       800            200           1000  0.984000
+    UCI_Indoor Kriging_Augmented         0.80       800            200           1000  0.979000
+    UCI_Indoor         Real_Only         1.00      1000              0           1000  0.987000
+    UCI_Indoor       Oracle_100%         0.01      1000              0           1000  0.987000
+    UCI_Indoor       Oracle_100%         0.05      1000              0           1000  0.987000
+    UCI_Indoor       Oracle_100%         0.10      1000              0           1000  0.987000
+    UCI_Indoor       Oracle_100%         0.25      1000              0           1000  0.987000
+    UCI_Indoor       Oracle_100%         0.50      1000              0           1000  0.987000
+    UCI_Indoor       Oracle_100%         0.80      1000              0           1000  0.987000
+    UCI_Indoor       Oracle_100%         1.00      1000              0           1000  0.987000
+POWDER_Outdoor         Real_Only         0.01        33              0             33  0.374092
+POWDER_Outdoor     DiT_Augmented         0.01        33           3264           3297  0.623487
+POWDER_Outdoor     GAN_Augmented         0.01        33           3264           3297  0.386199
+POWDER_Outdoor Kriging_Augmented         0.01        33           2652           2685  0.342615
+POWDER_Outdoor         Real_Only         0.05       165              0            165  0.602906
+POWDER_Outdoor     DiT_Augmented         0.05       165           3136           3301  0.661017
+POWDER_Outdoor     GAN_Augmented         0.05       165           3136           3301  0.610169
+POWDER_Outdoor Kriging_Augmented         0.05       165           2940           3105  0.593220
+POWDER_Outdoor         Real_Only         0.10       330              0            330  0.700969
+POWDER_Outdoor     DiT_Augmented         0.10       330           2976           3306  0.694915
+POWDER_Outdoor     GAN_Augmented         0.10       330           2976           3306  0.700969
+POWDER_Outdoor Kriging_Augmented         0.10       330           2790           3120  0.687651
+POWDER_Outdoor         Real_Only         0.25       825              0            825  0.796610
+POWDER_Outdoor     DiT_Augmented         0.25       825           2480           3305  0.757869
+POWDER_Outdoor     GAN_Augmented         0.25       825           2480           3305  0.796610
+POWDER_Outdoor Kriging_Augmented         0.25       825           2325           3150  0.774818
+POWDER_Outdoor         Real_Only         0.50      1650              0           1650  0.808717
+POWDER_Outdoor     DiT_Augmented         0.50      1650           1648           3298  0.797821
+POWDER_Outdoor     GAN_Augmented         0.50      1650           1648           3298  0.799031
+POWDER_Outdoor Kriging_Augmented         0.50      1650           1545           3195  0.811138
+POWDER_Outdoor         Real_Only         0.80      2640              0           2640  0.835351
+POWDER_Outdoor     DiT_Augmented         0.80      2640            656           3296  0.824455
+POWDER_Outdoor     GAN_Augmented         0.80      2640            656           3296  0.837772
+POWDER_Outdoor Kriging_Augmented         0.80      2640            615           3255  0.808717
+POWDER_Outdoor         Real_Only         1.00      3301              0           3301  0.818402
+POWDER_Outdoor       Oracle_100%         0.01      3301              0           3301  0.818402
+POWDER_Outdoor       Oracle_100%         0.05      3301              0           3301  0.818402
+POWDER_Outdoor       Oracle_100%         0.10      3301              0           3301  0.818402
+POWDER_Outdoor       Oracle_100%         0.25      3301              0           3301  0.818402
+POWDER_Outdoor       Oracle_100%         0.50      3301              0           3301  0.818402
+POWDER_Outdoor       Oracle_100%         0.80      3301              0           3301  0.818402
+POWDER_Outdoor       Oracle_100%         1.00      3301              0           3301  0.818402
+✓ Plot saved to: ./work_dir/dit_data_fidelity_plot.png

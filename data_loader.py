@@ -10,8 +10,11 @@ import zipfile
 from dataclasses import dataclass
 import numpy as np
 import pandas as pd
+import torch
+from torch.utils.data import Dataset
 from sklearn.preprocessing import StandardScaler
 from sklearn.model_selection import StratifiedShuffleSplit
+from torchvision import datasets, transforms
 
 
 @dataclass
@@ -227,13 +230,211 @@ class POWDERDataset:
         )
 
 
-def load_dataset(dataset_name: str, workdir: str, seed: int = 42) -> DatasetInfo:
+class UniCellularDataset:
+    """UniCellular indoor RSS dataset loader (cellular signals, multiple floors)"""
+    
+    def __init__(self, workdir: str, seed: int = 42, building: str = 'deeb', max_cells: int = 20):
+        self.workdir = workdir
+        self.seed = seed
+        self.building = building.lower()
+        self.max_cells = max_cells
+        
+        # Dataset paths
+        self.data_root = os.path.join(workdir, "..", "data", "Unicellular_Dataset", "TestBedData")
+        
+    def load_fingerprints(self, json_path):
+        """Load fingerprints from JSON file and convert to RSS matrix"""
+        with open(json_path, 'r') as f:
+            data = json.load(f)
+        
+        fingerprints = data['Fingerprints']
+        
+        # First pass: collect all unique cell IDs
+        all_cell_ids = set()
+        for fp in fingerprints.values():
+            for tx in fp['scan']['transmitterInfoList']:
+                cell_id = tx['id']
+                # Filter out invalid cell IDs
+                if cell_id != 2147483647:  # This is a placeholder value
+                    all_cell_ids.add(cell_id)
+        
+        # Sort cell IDs for consistent ordering
+        cell_id_list = sorted(list(all_cell_ids))[:self.max_cells]
+        cell_id_to_idx = {cid: idx for idx, cid in enumerate(cell_id_list)}
+        
+        # Second pass: create RSS matrix
+        samples = []
+        labels = []
+        
+        for fp in fingerprints.values():
+            # Create RSS vector (default to minimum RSS)
+            rss_vector = np.full(len(cell_id_list), -120.0, dtype=np.float32)
+            
+            # Fill in measured RSS values
+            for tx in fp['scan']['transmitterInfoList']:
+                cell_id = tx['id']
+                if cell_id in cell_id_to_idx:
+                    idx = cell_id_to_idx[cell_id]
+                    rss = tx['rss']
+                    # Validate RSS value
+                    if not np.isnan(rss) and not np.isinf(rss) and -120 <= rss <= 0:
+                        rss_vector[idx] = rss
+            
+            samples.append(rss_vector)
+            # Use floor number as label (0-indexed)
+            labels.append(fp['floorNumber'] - 1)
+        
+        return np.array(samples, dtype=np.float32), np.array(labels, dtype=np.int64), cell_id_list
+    
+    def load(self) -> DatasetInfo:
+        """Load and preprocess the UniCellular dataset"""
+        print("\n" + "="*70)
+        print(f"Loading UniCellular Dataset ({self.building.upper()})")
+        print("="*70)
+        
+        # Select data file based on building
+        if self.building == 'deeb':
+            json_path = os.path.join(self.data_root, "DeebMall", 
+                                    "DeebMall_4_Phones_9_Floors_1.json")
+            num_floors = 9
+        elif self.building == 'alexu':
+            json_path = os.path.join(self.data_root, "AlexuElectrical", 
+                                    "AlexuElectrical_4_Phones_7_Floors_1.json")
+            num_floors = 7
+        else:
+            raise ValueError(f"Unknown building: {self.building}. Choose 'deeb' or 'alexu'")
+        
+        if not os.path.exists(json_path):
+            raise FileNotFoundError(
+                f"Dataset not found at {json_path}\n"
+                f"Please ensure the Unicellular_Dataset folder is in data/"
+            )
+        
+        # Load fingerprints
+        X, y, cell_ids = self.load_fingerprints(json_path)
+        
+        print(f"Building: {self.building.upper()}")
+        print(f"Total samples: {X.shape[0]}")
+        print(f"Features: {X.shape[1]} cell towers")
+        print(f"Cell IDs: {cell_ids[:5]}..." if len(cell_ids) > 5 else f"Cell IDs: {cell_ids}")
+        print(f"Classes: {num_floors} floors")
+        print(f"RSS range: [{X[X > -120].min():.1f}, {X.max():.1f}] dBm")
+        print(f"Class distribution: {np.bincount(y)}")
+        
+        # Stratified train/test split
+        sss = StratifiedShuffleSplit(n_splits=1, test_size=0.3, random_state=self.seed)
+        train_idx, test_idx = next(sss.split(X, y))
+        X_tr, X_te = X[train_idx], X[test_idx]
+        y_tr, y_te = y[train_idx], y[test_idx]
+        
+        # Standardize using train stats only
+        scaler = StandardScaler()
+        X_tr_std = scaler.fit_transform(X_tr).astype(np.float32)
+        X_te_std = scaler.transform(X_te).astype(np.float32)
+        
+        print(f"Train: {X_tr_std.shape}, Test: {X_te_std.shape}")
+        print(f"Train class distribution: {np.bincount(y_tr)}")
+        print(f"Test class distribution: {np.bincount(y_te)}")
+        
+        return DatasetInfo(
+            name=f"UniCellular_{self.building.upper()}",
+            num_features=X_tr_std.shape[1],
+            num_classes=num_floors,
+            X_train=X_tr_std,
+            X_test=X_te_std,
+            y_train=y_tr,
+            y_test=y_te,
+            scaler=scaler
+        )
+
+
+class MNISTDataset:
+    """MNIST dataset loader for physics-guided loss experiments"""
+    
+    def __init__(self, workdir: str, seed: int = 42):
+        self.workdir = workdir
+        self.seed = seed
+        self.data_dir = os.path.join(workdir, "mnist_data")
+        os.makedirs(self.data_dir, exist_ok=True)
+    
+    def load(self) -> DatasetInfo:
+        """Load and preprocess MNIST dataset"""
+        print("\n" + "="*70)
+        print("Loading MNIST Dataset")
+        print("="*70)
+        
+        # Load MNIST train and test sets
+        transform = transforms.Compose([
+            transforms.ToTensor(),  # Converts to [0, 1] range
+        ])
+        
+        train_dataset = datasets.MNIST(
+            root=self.data_dir, 
+            train=True, 
+            download=True, 
+            transform=transform
+        )
+        
+        test_dataset = datasets.MNIST(
+            root=self.data_dir,
+            train=False,
+            download=True,
+            transform=transform
+        )
+        
+        # Convert to numpy arrays
+        # MNIST images are 28x28, we'll keep them as is
+        X_train = train_dataset.data.numpy().astype(np.float32) / 255.0  # Normalize to [0, 1]
+        y_train = train_dataset.targets.numpy().astype(np.int64)
+        
+        X_test = test_dataset.data.numpy().astype(np.float32) / 255.0
+        y_test = test_dataset.targets.numpy().astype(np.int64)
+        
+        # Add channel dimension: (N, 28, 28) -> (N, 1, 28, 28)
+        X_train = X_train[:, np.newaxis, :, :]
+        X_test = X_test[:, np.newaxis, :, :]
+        
+        num_classes = 10  # Digits 0-9
+        
+        print(f"Total train samples: {X_train.shape[0]}")
+        print(f"Total test samples: {X_test.shape[0]}")
+        print(f"Image shape: {X_train.shape[1:]}")
+        print(f"Classes: {num_classes} (digits 0-9)")
+        print(f"Train class distribution: {np.bincount(y_train)}")
+        print(f"Test class distribution: {np.bincount(y_test)}")
+        
+        # No scaler needed for MNIST (already normalized to [0, 1])
+        scaler = None
+        
+        return DatasetInfo(
+            name="MNIST",
+            num_features=28 * 28,  # Flattened size
+            num_classes=num_classes,
+            X_train=X_train,
+            X_test=X_test,
+            y_train=y_train,
+            y_test=y_test,
+            scaler=scaler
+        )
+
+
+def load_dataset(dataset_name: str, workdir: str, seed: int = 42, **kwargs) -> DatasetInfo:
     """Load a dataset by name"""
     if dataset_name.lower() in ['uci', 'indoor', 'uci_indoor']:
         loader = UCIWiFiDataset(workdir, seed)
         return loader.load()
     elif dataset_name.lower() in ['powder', 'outdoor', 'powder_outdoor']:
         loader = POWDERDataset(workdir, seed)
+        return loader.load()
+    elif dataset_name.lower() in ['unicellular', 'unicellular_deeb', 'deeb']:
+        building = kwargs.get('building', 'deeb')
+        loader = UniCellularDataset(workdir, seed, building=building)
+        return loader.load()
+    elif dataset_name.lower() in ['unicellular_alexu', 'alexu']:
+        loader = UniCellularDataset(workdir, seed, building='alexu')
+        return loader.load()
+    elif dataset_name.lower() == 'mnist':
+        loader = MNISTDataset(workdir, seed)
         return loader.load()
     else:
         raise ValueError(f"Unknown dataset: {dataset_name}")
